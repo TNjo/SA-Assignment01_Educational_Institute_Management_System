@@ -1,0 +1,115 @@
+package finance_producer;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class FinanceServiceImpl implements FinanceService {
+
+    private ArrayList<Finance> financeDetails = new ArrayList<>();
+    private Scanner scanner = new Scanner(System.in);
+
+    private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August",
+                                            "September", "October", "November", "December"};
+    private static final String[] CLASS_NAMES = {"Maths", "Science", "English", "History", "Geography", "Computer Science"};
+
+    public FinanceServiceImpl() {
+        // Add sample data to the financeDetails array
+        financeDetails.add(new Finance("5498498878979", "Amara", "Maths", "6", getCurrentDate(), 500.0, "March"));
+        financeDetails.add(new Finance("5498498878980", "Kamal", "Science", "7", getCurrentDate(), 600.0, "March"));
+        financeDetails.add(new Finance("5498498878981", "Nimal", "English", "8", getCurrentDate(), 450.0, "March"));
+        financeDetails.add(new Finance("5498479878982", "Nipun", "Maths", "6", getCurrentDate(), 550.0, "March"));
+        financeDetails.add(new Finance("5498479878983", "Sadun", "Science", "7", getCurrentDate(), 700.0, "March"));
+    }
+
+    @Override
+    public void displayFinance() {
+    }
+
+    @Override
+    public void addFinanceDetails() {
+        System.out.println("Enter Student Name:");
+        String studentName = scanner.nextLine();
+
+        System.out.println("Select Class Name:");
+        String className = selectClassName();
+
+        System.out.println("Enter Grade:");
+        String grade = scanner.nextLine();
+
+        System.out.println("Enter Amount:");
+        double amount = scanner.nextDouble();
+
+        String month = selectMonth();
+
+        // Generate short unique ID
+        String id = generateShortUniqueId();
+
+        Finance newFinance = new Finance(id, studentName, className, grade, getCurrentDate(), amount, month);
+        financeDetails.add(newFinance);
+        System.out.println("Finance details added successfully!");
+    }
+
+    @Override
+    public void showFinanceDetails() {
+        System.out.println("| FeeID\t\t| Student Name | Class Name  | Grade |   Date   | Amount |  Month  |");
+
+        for (Finance finance : financeDetails) {
+            System.out.println("  " + finance.getId() + "\t\t" + finance.getStudentName() + "\t" + finance.getClassName() + "  " + finance.getGrade() + "   " + finance.getDate() + "   " + finance.getAmount() + "   " + finance.getMonth());
+        }
+    }
+
+    @Override
+    public void calculateTotalCollectedFees() {
+        double totalCollectedFees = 0;
+        for (Finance finance : financeDetails) {
+            totalCollectedFees += finance.getAmount();
+        }
+        System.out.println("Total Collected Fees: " + totalCollectedFees);
+    }
+
+    private String generateShortUniqueId() {
+        return Long.toString(System.currentTimeMillis());
+    }
+
+    private String getCurrentDate() {
+        return java.time.LocalDate.now().toString();
+    }
+
+    private String selectMonth() {
+        int choice;
+        while (true) {
+            System.out.println("Select Month:");
+            for (int i = 0; i < MONTHS.length; i++) {
+                System.out.println((i + 1) + ". " + MONTHS[i]);
+            }
+            System.out.print("Enter the number corresponding to the month: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+            if (choice >= 1 && choice <= MONTHS.length) {
+                break;
+            } else {
+                System.out.println("Invalid choice. Please enter a number between 1 and " + MONTHS.length + ".");
+            }
+        }
+        return MONTHS[choice - 1];
+    }
+
+    private String selectClassName() {
+        int choice;
+        while (true) {
+            System.out.println("Select Class Name:");
+            for (int i = 0; i < CLASS_NAMES.length; i++) {
+                System.out.println((i + 1) + ". " + CLASS_NAMES[i]);
+            }
+            System.out.print("Enter the number corresponding to the class: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+            if (choice >= 1 && choice <= CLASS_NAMES.length) {
+                break;
+            } else {
+                System.out.println("Invalid choice. Please enter a number between 1 and " + CLASS_NAMES.length + ".");
+            }
+        }
+        return CLASS_NAMES[choice - 1];
+    }
+}

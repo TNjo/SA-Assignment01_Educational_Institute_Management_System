@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;timetable_consumer.Activator&apos; to &apos;Timetable_Consumer_Activator&apos;&#x0D;&#x0A;- Original project: &apos;Timetable_Consumer&apos;&#x0D;&#x0A;- Original element: &apos;timetable_consumer.Activator&apos;&#x0D;&#x0A;- Renamed element: &apos;timetable_consumer.Timetable_Consumer_Activator&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Activator&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;timetable_consumer{Activator.java[Activator" matchStrategy="1" name="Timetable_Consumer_Activator" qualified="false" references="true" similarDeclarations="false" stamp="1710401343453" textual="false" version="1.0"/>
+</session>

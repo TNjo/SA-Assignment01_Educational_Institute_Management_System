@@ -1,0 +1,8 @@
+package finance_producer;
+
+public interface FinanceService {
+	public void displayFinance();
+	public void addFinanceDetails();
+	public void showFinanceDetails();
+	public void calculateTotalCollectedFees();
+}

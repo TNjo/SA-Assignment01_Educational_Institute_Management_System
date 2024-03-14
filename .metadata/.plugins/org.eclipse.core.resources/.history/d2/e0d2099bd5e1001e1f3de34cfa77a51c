@@ -1,0 +1,20 @@
+package all_main_consumer;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import timetable_consumer.Timetable_Consumer_Activator;
+
+public class Activator implements BundleActivator {
+
+	private static BundleContext context;
+	Timetable_Consumer_Activator timetable = new Timetable_Consumer_Activator();
+	
+	public void start(BundleContext bundleContext) throws Exception {
+		
+	}
+
+	public void stop(BundleContext bundleContext) throws Exception {
+		Activator.context = null;
+	}
+
+}

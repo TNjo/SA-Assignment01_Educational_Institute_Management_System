@@ -1,0 +1,81 @@
+package all_main_consumer;
+
+import finance_consumer.FinanceConsumerActivator;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import student_consumer.Student_Consumer_Activator;
+import teacher_consumer.Teacher_Consumer_Activator;
+import timetable_consumer.Timetable_Consumer_Activator;
+
+public class Activator implements BundleActivator {
+
+	Timetable_Consumer_Activator timetable = new Timetable_Consumer_Activator();
+	FinanceConsumerActivator finance = new FinanceConsumerActivator();
+	Teacher_Consumer_Activator teacher = new Teacher_Consumer_Activator();
+	Student_Consumer_Activator student = new Student_Consumer_Activator();
+	
+	public void start(BundleContext bundleContext) throws Exception {
+		Scanner scanner = new Scanner(System.in);
+        boolean running = true;
+        String Logo = ""
+        		+ " _____      _                      _    _                       _   ___              _    _  _           _         \r\n"
+        		+ "| ____|  __| | _   _   ___   __ _ | |_ (_)  ___   _ __    __ _ | | |_ _| _ __   ___ | |_ (_)| |_  _   _ | |_   ___ \r\n"
+        		+ "|  _|   / _` || | | | / __| / _` || __|| | / _ \\ | '_ \\  / _` || |  | | | '_ \\ / __|| __|| || __|| | | || __| / _ \\\r\n"
+        		+ "| |___ | (_| || |_| || (__ | (_| || |_ | || (_) || | | || (_| || |  | | | | | |\\__ \\| |_ | || |_ | |_| || |_ |  __/\r\n"
+        		+ "|_____| \\__,_| \\__,_| \\___| \\__,_| \\__||_| \\___/ |_| |_| \\__,_||_| |___||_| |_||___/ \\__||_| \\__| \\__,_| \\__| \\___|\r\n"
+        		+ "                                                                                                                   \r\n"
+        		+ "   __  __                                                            _      ____               _                    \r\n"
+        		+ "  |  \\/  |  __ _  _ __    __ _   __ _   ___  _ __ ___    ___  _ __  | |_   / ___|  _   _  ___ | |_   ___  _ __ ___  \r\n"
+        		+ "  | |\\/| | / _` || '_ \\  / _` | / _` | / _ \\| '_ ` _ \\  / _ \\| '_ \\ | __|  \\___ \\ | | | |/ __|| __| / _ \\| '_ ` _ \\ \r\n"
+        		+ "  | |  | || (_| || | | || (_| || (_| ||  __/| | | | | ||  __/| | | || |_    ___) || |_| |\\__ \\| |_ |  __/| | | | | |\r\n"
+        		+ "  |_|  |_| \\__,_||_| |_| \\__,_| \\__, | \\___||_| |_| |_| \\___||_| |_| \\__|  |____/  \\__, ||___/ \\__| \\___||_| |_| |_|\r\n"
+        		+ "                                |___/                                              |___/                            \r\n"
+        		+ "";
+        System.out.println(Logo);
+        while (running) {
+            System.out.println("\t\t\t(¯`·._.··¸.-~*´¨¯¨`*·~-.SELECT AN ACTION.-~*´¨¯¨`*·~-.¸··._.·´¯)");
+            System.out.println("\t\t\t\t\t   1. Student Management𝘁");
+            System.out.println("\t\t\t\t\t   2. Teachers Management");
+            System.out.println("\t\t\t\t\t   3. Financial Management");
+            System.out.println("\t\t\t\t\t   4. Timetable Management");
+            System.out.println("\t\t\t\t\t   5. Exit");
+            System.out.print("Enter your choice: ");
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+
+                switch (choice) {
+                    case 1:
+                        student.start(bundleContext);
+                        break;
+                    case 2:
+                        teacher.start(bundleContext);
+                        break;
+                    case 3:
+                    	//finance.start(bundleContext);
+                        break;
+                    case 4:
+                       timetable.start(bundleContext);
+                    case 5:
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } catch (NoSuchElementException e) {
+                System.out.println("Please enter a valid choice.");
+                scanner.nextLine(); // Consume newline
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+	}
+
+	public void stop(BundleContext bundleContext) throws Exception {
+		System.out.println("Bye");
+	}
+
+}

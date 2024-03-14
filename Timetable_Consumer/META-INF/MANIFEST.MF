@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Timetable_Consumer
+Bundle-SymbolicName: Timetable_Consumer
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: timetable_consumer.Timetable_Consumer_Activator
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: Timetable.Consumer
+Import-Package: org.osgi.framework;version="1.3.0",
+ teacher_producer,
+ timetable_producer
+Bundle-ActivationPolicy: lazy
+Export-Package: timetable_consumer

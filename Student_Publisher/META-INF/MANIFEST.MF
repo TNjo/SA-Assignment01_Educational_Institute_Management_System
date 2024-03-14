@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Student_Publisher
+Bundle-SymbolicName: Student_Publisher
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: student_publisher.StudentPublisherActivator
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: Student.Publisher
+Import-Package: org.osgi.framework;version="1.3.0"
+Bundle-ActivationPolicy: lazy
+Export-Package: student_publisher

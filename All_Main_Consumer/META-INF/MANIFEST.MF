@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: All_Main_Consumer
+Bundle-SymbolicName: All_Main_Consumer
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: all_main_consumer.Activator
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: All.Main.Consumer
+Import-Package: finance_consumer,
+ org.osgi.framework;version="1.3.0",
+ student_consumer,
+ teacher_consumer,
+ timetable_consumer
+Bundle-ActivationPolicy: lazy
+

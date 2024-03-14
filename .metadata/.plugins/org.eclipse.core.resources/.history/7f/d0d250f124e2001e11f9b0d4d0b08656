@@ -1,0 +1,73 @@
+package finance_consumer;
+
+import finance_producer.FinanceService;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
+public class FinanceConsumerActivator implements BundleActivator {
+
+    ServiceReference serviceReference;
+    FinanceService financeService;
+
+    public void start(BundleContext context) throws Exception {
+        System.out.println("Start FinanceConsumer");
+        serviceReference = context.getServiceReference(FinanceService.class.getName());
+        financeService = (FinanceService) context.getService(serviceReference);
+
+        handleActions();
+    }
+
+    public void stop(BundleContext context) throws Exception {
+
+        System.out.println("Good Bye");
+        context.ungetService(serviceReference);
+
+    }
+    
+    void handleActions() {
+        boolean running = true;
+        Scanner scanner = new Scanner(System.in);
+
+        while (running) {
+            System.out.println("----------------------------");
+            System.out.println("Choose an action:");
+            System.out.println("----------------------------");
+            System.out.println("1. Add Finance Details");
+            System.out.println("2. Display Finance Details");
+            System.out.println("3. Calculate Total Collected Fees");
+            System.out.println("4. Exit\n");
+            System.out.print("Enter your choice: ");
+
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline character
+
+                switch (choice) {
+                    case 1:
+                        financeService.addFinanceDetails();
+                        break;
+                    case 2:
+                        financeService.showFinanceDetails();
+                        break;
+                    case 3:
+                        financeService.calculateTotalCollectedFees();
+                        break;
+                    case 4:
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // Consume invalid input
+            }
+        }
+         
+    }
+}
+

@@ -1,0 +1,96 @@
+package timetable_consumer;
+
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import teacher_producer.TeacherService;
+import timetable_producer.TimetableService;
+
+public class Timetable_Consumer_Activator implements BundleActivator {
+
+    private ServiceReference serviceReference;
+    private ServiceReference serviceReference1;
+    private TimetableService service;
+    private TeacherService tservice;
+
+    public void start(BundleContext context) throws Exception {
+        System.out.println("Start Subscriber Service");
+        serviceReference = context.getServiceReference(TimetableService.class.getName());
+        service = (TimetableService) context.getService(serviceReference);
+        
+        serviceReference1 = context.getServiceReference(TeacherService.class.getName());
+        tservice = (TeacherService) context.getService(serviceReference1);
+        
+        String ascii = " "
+        		+ "▄▄▄▄▄▄▄ ▄▄▄ ▄▄   ▄▄ ▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄ ▄▄▄▄▄▄ ▄▄▄▄▄▄▄ ▄▄▄     ▄▄▄▄▄▄▄ \r\n"
+        		+ "█       █   █  █▄█  █       █       █      █  ▄    █   █   █       █\r\n"
+        		+ "█▄     ▄█   █       █    ▄▄▄█▄     ▄█  ▄   █ █▄█   █   █   █    ▄▄▄█\r\n"
+        		+ "  █   █ █   █       █   █▄▄▄  █   █ █ █▄█  █       █   █   █   █▄▄▄ \r\n"
+        		+ "  █   █ █   █       █    ▄▄▄█ █   █ █      █  ▄   ██   █▄▄▄█    ▄▄▄█\r\n"
+        		+ "  █   █ █   █ ██▄██ █   █▄▄▄  █   █ █  ▄   █ █▄█   █       █   █▄▄▄ \r\n"
+        		+ "  █▄▄▄█ █▄▄▄█▄█   █▄█▄▄▄▄▄▄▄█ █▄▄▄█ █▄█ █▄▄█▄▄▄▄▄▄▄█▄▄▄▄▄▄▄█▄▄▄▄▄▄▄█\r\n"
+        		+ "";
+        
+        System.out.println(ascii);
+        		
+        handleActions();
+    }
+
+    public void stop(BundleContext context) throws Exception {
+        System.out.println("Good Bye");
+        context.ungetService(serviceReference);
+    }
+
+    private void handleActions() {
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
+        while (running) {
+            System.out.println("\t\t\t█▓▒▒░░░Select an Action░░░▒▒▓█");
+            System.out.println("\t\t\t   1. Display Timetable");
+            System.out.println("\t\t\t   2. Assign Teachers to Subject");
+            System.out.println("\t\t\t   3. Display Teachers with Subjects");
+            System.out.println("\t\t\t   4. Update Teacher Assign to Subject");
+            System.out.println("\t\t\t   5. Exit");
+            System.out.print("Enter your choice: ");
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+
+                switch (choice) {
+                    case 1:
+                        System.out.print("Enter the grade (6-11): ");
+                        int grade = scanner.nextInt();
+                        service.displayTimetable(grade);
+                        break;
+                    case 2:
+                    	System.out.println("Teachers List");
+                    	tservice.displayTeachers();
+                        service.assignTeachers();
+                        break;
+                    case 3:
+                    	System.out.print("Enter the grade (6-11): ");
+                        int grade1 = scanner.nextInt();
+                        service.displayTeachers(grade1);
+                        break;
+                    case 4:
+                        service.updateTeacher();
+                        break;
+                    case 5:
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } catch (NoSuchElementException e) {
+                System.out.println("Please enter a valid choice.");
+                scanner.nextLine(); // Consume newline
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        // Stop the shell after exiting the loop
+        System.out.println("Good Bye");
+    }
+}

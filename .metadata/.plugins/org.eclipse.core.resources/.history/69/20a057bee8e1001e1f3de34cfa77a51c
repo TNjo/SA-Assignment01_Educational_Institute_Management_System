@@ -1,0 +1,22 @@
+package student_consumer;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+
+public class Student_Consumer_Activator implements BundleActivator {
+
+	private static BundleContext context;
+
+	static BundleContext getContext() {
+		return context;
+	}
+
+	public void start(BundleContext bundleContext) throws Exception {
+		Student_Consumer_Activator.context = bundleContext;
+	}
+
+	public void stop(BundleContext bundleContext) throws Exception {
+		Student_Consumer_Activator.context = null;
+	}
+
+}
